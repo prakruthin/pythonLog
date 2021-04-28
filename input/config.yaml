@@ -1,0 +1,12 @@
+---
+attach:
+  - NAS-EM   ATTACH_REQUEST    #(ue_id = 11) 
+  - NAS-EM   Authentication complete   # (ue_id=0x0000000B)
+  - MME-AP   CREATE SESSION REQ    #0x0000000B
+  - MME-AP   MODIFY BEARER REQ    #ue_id = (11)
+  - NAS-EM   Attach Complete message    #ue_id = (11)
+
+ue_id:
+  - 12
+  
+
