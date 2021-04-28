@@ -1,0 +1,9 @@
+NAS-EM	EMMAS-SAP - Message Type = ATTACH_REQUEST(0x41) for (ue_id = 10)
+NAS-EM	EMM-PROC  - Authentication complete (ue_id=0x0000000A)
+NAS-EM	EMM-PROC  - Authentication complete (ue_id=0x0000000A)
+MME-AP	Sending S11 CREATE SESSION REQ message to SPGW for ue_id 0x0000000A
+MME-AP	Sending S11 MODIFY BEARER REQ to SPGW for ue_id = (10), teid = (10)
+NAS-EM	EMMAS-SAP - Received Attach Complete message for ue_id = (10)
+
+
+ue_id 10 successfully attached 
