@@ -4,9 +4,11 @@ from time import strftime
 import yaml
 import os
 import datetime
+from common import *
 
 
 class logParse:
+    @try_except
     def parseData(log_file_path,yaml_file_path,mydir_out):
         regex=['.* ATTACH_REQUEST\(0x41\) for \(ue_id = (\d+)\)','.* CREATE SESSION REQ message to SPGW for ue_id 0x0000000(\w+)','.* MODIFY BEARER REQ to SPGW for ue_id = \((\d+)\).*','.* Received Attach Complete message for ue_id = \((\d+)\)','.* Authentication complete \(ue_id=0x0000000(\w+)']
         x=[]
@@ -48,38 +50,29 @@ class logParse:
                 logParse.addToFile(match,mydir_out)
             file.close()
         logParse.printResult(count,mydir_out)
-
+    
     def getUeid(yaml_file_path):
-        try:
-            f=open('C:\project\input\config.yaml', "r")
-            data= yaml.load(f, Loader= yaml.FullLoader)
-            return data["ue_id"]
-            f.close()
+        f=open('C:\project\input\config.yaml', "r")
+        data= yaml.load(f, Loader= yaml.FullLoader)
+        return data["ue_id"]
+        f.close()
 
-        except Exception as e:
-            print(e)
-            return []
-        
+    @try_except   
     def printResult(count,mydir_out):
-        try:
-            file=open(mydir_out, "a+")
-            file.write("\n")
-            for key,value in count.items():
-                if(value>=6):
-                    file.write("ue_id " + str(key) + " successfully attached \n" )
-            file.close() 
-        except Exception as e:
-            print(e)   
-
+        file=open(mydir_out, "a+")
+        file.write("\n")
+        for key,value in count.items():
+            if(value>=6):
+                file.write("ue_id " + str(key) + " successfully attached \n" )
+        file.close() 
+          
+    @try_except
     def addToFile(match,mydir_out):
-        try:
-            file=open(mydir_out, "a+")
-            for line in match:
-                file.write(line.split(' ')[9] + "\t" +line.split('   ')[-1])
-            file.write("\n")
-            file.close()
-        except Exception as e:
-            print(e) 
+        file=open(mydir_out, "a+")
+        for line in match:
+            file.write(line.split(' ')[9] + "\t" +line.split('   ')[-1])
+        file.write("\n")
+        file.close()
 
 def main():
     log_file_path = r"C:\project\input\attach1.log"
@@ -89,5 +82,6 @@ def main():
     
     logparse = logParse
     os.makedirs(mydir)
+    os.chmod(log_file_path,0o444)
     logparse.parseData(log_file_path,yaml_file_path,mydir_out)
 
