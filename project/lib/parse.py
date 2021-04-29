@@ -4,8 +4,6 @@ from time import strftime
 import yaml
 import os
 import datetime
-x=[]
-y=[]
 
 
 def addToFile(line,mydir_out):
@@ -17,15 +15,15 @@ def addToFile(line,mydir_out):
 class logParse:
     def parseData(log_file_path,yaml_file_path,mydir_out):
         regex=['.* ATTACH_REQUEST\(0x41\) for \(ue_id = (\d+)\)','.* CREATE SESSION REQ message to SPGW for ue_id 0x0000000(\w+)','.* MODIFY BEARER REQ to SPGW for ue_id = \((\d+)\).*','.* Received Attach Complete message for ue_id = \((\d+)\)','.* Authentication complete \(ue_id=0x0000000(\w+)']
+        x=[]
+        y=[]
+        count={}
 
         with open(yaml_file_path, "r") as f:
             data= yaml.load(f, Loader= yaml.FullLoader)
             keys= data["attach"]
             ueid=data["ue_id"]
-            
-        match=[]
-        count={}
-        
+    
         for index in range(0,len(ueid)):
             with open(log_file_path,"r")as file:
                 for line in file:
